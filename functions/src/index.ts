@@ -15,8 +15,8 @@ import admin = require("firebase-admin");
 
 admin.initializeApp();
 
-const fire = admin.firestore();
-// const FieldValue = admin.firestore.FieldValue;
+// const fire = await admin.firestore();
+// const FieldValue = await admin.firestore.FieldValue;
 const real = admin.database();
 
 // Start writing functions
@@ -63,120 +63,131 @@ const real = admin.database();
 //     return null;
 //   });
 
-exports.Accident_emailing = functions.database.ref("/User1/Helmet/Accident/Value")
-  .onUpdate(() => {
-    const count = admin.database().ref("User1/Details/EmailCount").get();
-    const name = admin.database().ref("User1/Details/Name").get();
-    const vehicle = admin.database().ref("User1/Details/Vehicle_No").get();
-    for(let i=0;i<count.value;i++ ){
-      switch(i) {
-        case 1:
-        const email = admin.database().ref("User1/Details/Email1").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 2:
-        const email = admin.database().ref("User1/Details/Email2").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 3:
-        const email = admin.database().ref("User1/Details/Email3").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 4:
-        const email = admin.database().ref("User1/Details/Email4").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 5:
-        const email = admin.database().ref("User1/Details/Email5").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 6:
-        const email = admin.database().ref("User1/Details/Email6").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 7:
-        const email = admin.database().ref("User1/Details/Email7").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 8:
-        const email = admin.database().ref("User1/Details/Email8").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
-        case 9:
-        const email = admin.database().ref("User1/Details/Email9").get();
-        admin.firestore().collection("mail").add({
-          "to": email.value,
-          "message": {
-            "subject": "Accident Occurred",
-            "text": `${name.value} has met an accident while riding on a `+
-            `vehicle with number ${vehicle.value}`,
-          },
-        });
-        break;
+exports.Auto_emailing = functions.database.ref("/User1/Helmet/Accident/Value")
+  .onUpdate(async (change) => {
+    if (change.after.val() == 1 ) {
+      const count = await real.ref("User1/Details/EmailCount").get();
+      const name = await real.ref("User1/Details/Name").get();
+      const vehicle = await real.ref("User1/Details/Vehicle").get();
+      for (let i=1; i<=count.val(); i++) {
+        switch (i) {
+        case 1: {
+          const email1 = await real.ref("User1/Details/Email1").get();
+          admin.firestore().collection("mail").add({
+            "to": email1.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 2: {
+          const email2 = await real.ref("User1/Details/Email2").get();
+          admin.firestore().collection("mail").add({
+            "to": email2.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 3: {
+          const email3 = await real.ref("User1/Details/Email3").get();
+          admin.firestore().collection("mail").add({
+            "to": email3.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 4: {
+          const email4 = await real.ref("User1/Details/Email4").get();
+          admin.firestore().collection("mail").add({
+            "to": email4.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 5: {
+          const email5 = await real.ref("User1/Details/Email5").get();
+          admin.firestore().collection("mail").add({
+            "to": email5.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 6: {
+          const email6 = await real.ref("User1/Details/Email6").get();
+          admin.firestore().collection("mail").add({
+            "to": email6.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 7: {
+          const email7 = await real.ref("User1/Details/Email7").get();
+          admin.firestore().collection("mail").add({
+            "to": email7.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 8: {
+          const email8 = await real.ref("User1/Details/Email8").get();
+          admin.firestore().collection("mail").add({
+            "to": email8.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        case 9: {
+          const email9 = await real.ref("User1/Details/Email9").get();
+          admin.firestore().collection("mail").add({
+            "to": email9.val(),
+            "message": {
+              "subject": "Accident Occurred",
+              "text": `${name.val()} has met an accident while riding on a `+
+              `vehicle with number ${vehicle.val()}`,
+            },
+          });
+          break;
+        }
+        }
       }
+      admin.firestore().collection("mail").add({
+        "to": "debapriya.paul.cse.2020@tint.edu.in",
+        "message": {
+          "subject": "Accident Occurred",
+          "text": `${name.val()} has met an accident while riding on a `+
+          `vehicle with number ${vehicle.val()}`,
+        },
+      });
     }
-    admin.firestore().collection("mail").add({
-      "to": "debaratipal4@gmail.com",
-      "message": {
-        "subject": "Accident Occurred",
-        "text": "Someone has met an accident while riding on a "+
-        "vehicle with number 123456789",
-      },
-    });
   });
